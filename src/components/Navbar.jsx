@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 
 const NavBar = () => {
-  const user = useSelector((store) => store.user);
+  const user = useSelector((store) => store.user);  // subscribing the store
   
 
 
@@ -35,8 +35,9 @@ const NavBar = () => {
               
              
               <li>
-                <a>Logout</a>
-                <a>profile</a>
+                <Link to="/">logout</Link>
+                <Link to="/">settings</Link>
+                <Link to="/profile">profile</Link>
               </li>
             </ul>
           </div>
