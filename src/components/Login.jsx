@@ -10,6 +10,7 @@ import { Base_url } from "../utills/constants";
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [error,setError]=useState();
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Login = () => {
       dispatch(addUser(res.data));
       return navigate("/");
     } catch (err) {
+       setError("invalid credentials");
       return ("something went wrong")
     }
   };
@@ -65,14 +67,18 @@ const Login = () => {
               />
             </label>
           </div>
-         
-          <div className="card-actions justify-center m-2">
+           
+           <div>
+            <p className="text-red-500">{error}</p>
+          <div className="card-actions justify-center m-5">
+          
             <button
               className="btn btn-primary"
               onClick={ handleLogin}
             >
               Login
             </button>
+          </div>
           </div>
 
          
