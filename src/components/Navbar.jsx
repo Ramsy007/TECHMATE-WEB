@@ -55,8 +55,9 @@ const NavBar = () => {
                 {/* <Link to="/">logout</Link> */}
                 <a onClick={handleLogOut}>logout</a>
                 {/* <a onClick={()=>handleLogOut()}>logout</a> this line also work */}
-                <Link to="/">settings</Link>
+                <Link to="/connection">connections</Link>
                 <Link to="/profile">profile</Link>
+                <Link to="/requests">requests</Link>
               </li>
             </ul>
           </div>

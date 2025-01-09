@@ -11,6 +11,9 @@ const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [error,setError]=useState();
+  const [isloginform,setisloginform]=useState(true);
+  const [firstName,setfirstName]=useState("");
+  const [lastName,setlastName]=useState("");
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +35,26 @@ const Login = () => {
       return ("something went wrong")
     }
   };
+  const handleSignup = async () => {
+    try {
+      const res = await axios.post(
+        Base_url + "/signup",
+        {
+          firstName,
+          lastName,
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
+      console.log(res);
+      dispatch(addUser(res.data.data));
+      return navigate("/profile");
+    } catch (err) {
+       setError("invalid credentials");
+      return ("something went wrong")
+    }
+  };
 
   
 
@@ -43,7 +66,35 @@ const Login = () => {
            Login
           </h2>
           <div>
-           
+             
+         {!isloginform &&
+         (
+           <>
+          <label className="form-control w-full max-w-xs my-2">
+              <div className="label">
+                <span className="label-text">firstName:</span>
+              </div>
+              <input
+                type="text"
+                value={firstName}
+                className="input input-bordered w-full max-w-xs"
+                onChange={(e) => setfirstName(e.target.value)}
+              />
+            </label>
+            <label className="form-control w-full max-w-xs my-2">
+              <div className="label">
+                <span className="label-text">lastName:</span>
+              </div>
+              <input
+                type="text"
+                value={lastName}
+                className="input input-bordered w-full max-w-xs"
+                onChange={(e) => setlastName(e.target.value)}
+              />
+              
+            </label>
+            </>
+            )}
             <label className="form-control w-full max-w-xs my-2">
               <div className="label">
                 <span className="label-text">Email ID:</span>
@@ -68,18 +119,27 @@ const Login = () => {
             </label>
           </div>
            
-           <div>
+           
             <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center m-5">
           
             <button
               className="btn btn-primary"
-              onClick={ handleLogin}
+              onClick={isloginform ? handleLogin:handleSignup}
             >
-              Login
+             {isloginform ?"login":"Signup"}
             </button>
           </div>
-          </div>
+          <p
+            className="m-auto cursor-pointer py-2"
+            onClick={() => setisloginform((value) => !value)}
+          >
+            {isloginform
+              ? "New User? Signup Here"
+              : "Existing User? Login Here"}
+          </p>
+
+          
 
          
         </div>
