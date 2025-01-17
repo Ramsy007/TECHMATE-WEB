@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Base_url } from "../utills/constants";
 import { useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utills/connectionSlice";
 
 const Connections = () => {
@@ -13,9 +13,9 @@ const Connections = () => {
         withCredentials: true,
       });
       console.log(res);
-      dispatch(addConnections(res.data.data1));
+      dispatch(addConnections(res.data.data.filter((item) => item !== null)));
     } catch (err) {
-      // Handle Error Case
+      console.log(err.message);
     }
   };
 
@@ -32,6 +32,7 @@ const Connections = () => {
       <h1 className="text-bold text-white text-3xl">Connections</h1>
 
       {connections.map((connection) => {
+           
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
           connection;
 
